@@ -2,6 +2,7 @@ from datetime import datetime
 import psycopg2
 import os
 import pandas as pd
+import pytz
 
 
 def connect_to_database():
@@ -68,7 +69,9 @@ def insert_inference(json_input: dict, json_output: dict) -> None:
     """
     connection = connect_to_database()
     curr = connection.cursor()
-    dt = datetime.now()
+
+    tz = pytz.timezone('Europe/Vilnius')
+    dt = datetime.now(tz)
 
     curr.execute(f"INSERT INTO inferences(inference_timestamp, inference_input, prediction)"
                  f"VALUES ('{dt}', '{json_input}', '{json_output}');")
