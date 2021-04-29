@@ -10,9 +10,9 @@ class Processor:
     """
 
     def __init__(self):
-        self.__reg = pickle.load(open("../model/regression.pkl", "rb"))
-        self.__scaler = pickle.load(open("../model/scaler.pkl", "rb"))
-        self.__encoder = pickle.load(open("../model/encoder.pkl", "rb"))
+        self.__reg = pickle.load(open("model/regression.pkl", "rb"))
+        self.__scaler = pickle.load(open("model/scaler.pkl", "rb"))
+        self.__encoder = pickle.load(open("model/encoder.pkl", "rb"))
         self.__categorical_features = [
             "city",
             "country",
