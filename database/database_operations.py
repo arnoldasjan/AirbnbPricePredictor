@@ -1,7 +1,6 @@
 from datetime import datetime
 import psycopg2
 import os
-import pandas as pd
 import pytz
 
 
@@ -22,44 +21,48 @@ def create_table() -> None:
     connection = connect_to_database()
     cur = connection.cursor()
 
-    cur.execute('''
+    cur.execute(
+        """
     CREATE TABLE IF NOT EXISTS inferences (
         id serial PRIMARY KEY,
         inference_timestamp TIMESTAMP,
         inference_input json NOT NULL,
         prediction json NOT NULL
-    );''')
+    );"""
+    )
 
-    print('Tables were created successfully')
+    print("Tables were created successfully")
 
 
 def drop_table() -> None:
-    """Drops existing table of inferences
-    """
+    """Drops existing table of inferences"""
     connection = connect_to_database()
     cur = connection.cursor()
-    cur.execute('''
+    cur.execute(
+        """
     DROP TABLE IF EXISTS
-        inferences;''')
+        inferences;"""
+    )
 
-    print('Tables were dropped successfully')
+    print("Tables were dropped successfully")
 
 
-def get_inferences() -> pd.DataFrame:
+def get_inferences():
     """Selects and returns dataframe with
     10 most recent inferences
     :return: pandas Dataframe with recent inferences
     """
     connection = connect_to_database()
     curr = connection.cursor()
-    curr.execute('''
+    curr.execute(
+        """
     SELECT *
     FROM inferences
     ORDER BY inference_timestamp DESC 
-    LIMIT 10;''')
+    LIMIT 10;"""
+    )
     rows = curr.fetchall()
-    df = pd.DataFrame(rows, columns=[x[0] for x in curr.description])
-    return df
+    return rows
 
 
 def insert_inference(json_input: dict, json_output: dict) -> None:
@@ -70,8 +73,10 @@ def insert_inference(json_input: dict, json_output: dict) -> None:
     connection = connect_to_database()
     curr = connection.cursor()
 
-    tz = pytz.timezone('Europe/Vilnius')
+    tz = pytz.timezone("Europe/Vilnius")
     dt = datetime.now(tz)
 
-    curr.execute(f"INSERT INTO inferences(inference_timestamp, inference_input, prediction)"
-                 f"VALUES ('{dt}', '{json_input}', '{json_output}');")
+    curr.execute(
+        f"INSERT INTO inferences(inference_timestamp, inference_input, prediction)"
+        f"VALUES ('{dt}', '{json_input}', '{json_output}');"
+    )
