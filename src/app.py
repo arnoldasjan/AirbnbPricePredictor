@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 import json
 from database.database_operations import insert_inference, get_inferences
 from datetime import date, datetime
-from processor import Processor
+from src.processor import Processor
 
 app = Flask(__name__, template_folder="../templates")
 
