@@ -1,10 +1,10 @@
 # Airbnb Price Predictor
 
-![airbnb_logo](Airbnb-Logo.png)
+<img alt="airbnblogo" src="Airbnb-Logo.png" width="200">
 
 ## Introduction
 
-We have all probably used an Airbnb services before, and you might have a question what would my apartment could be worth for a night's stand. With this tool you can find it out! Just enter your property's details and you will get the model's prediction.
+We have all probably used an [Airbnb](https://www.airbnb.com/) services before, and you might have a question what would my apartment could be worth for a night's stand. With this tool you can find it out! Just enter your property's details and you will get the model's prediction.
 
 First, I scraped Airbnb data for different cities and created a Linear Regression model with L1 Lasso regularization. Using Flask and API and a regular input form was created to access the model for predictions.
 
