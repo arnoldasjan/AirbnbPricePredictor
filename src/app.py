@@ -50,7 +50,7 @@ def predict():
         json_input = json.loads(request.data)
         insert_inference(json.dumps(json_input), json.dumps(predictions.tolist()))
         return json.dumps({"Predicted Price": predictions.tolist()})
-    except (KeyError, json.JSONDecodeError, AssertionError):
+    except (KeyError, json.JSONDecodeError, AssertionError, ValueError):
         return json.dumps({"error": "CHECK INPUT"}), 400
     except Exception as err:
         return json.dumps({"error": "PREDICTION FAILED", "message": {err}}), 500
