@@ -47,10 +47,10 @@ def drop_table() -> None:
     print("Tables were dropped successfully")
 
 
-def get_inferences():
-    """Selects and returns dataframe with
+def get_inferences() -> list:
+    """Selects and returns
     10 most recent inferences
-    :return: pandas Dataframe with recent inferences
+    :return: list of tuples from database table
     """
     connection = connect_to_database()
     curr = connection.cursor()

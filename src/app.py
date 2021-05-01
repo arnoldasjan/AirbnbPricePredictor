@@ -8,8 +8,10 @@ app = Flask(__name__, template_folder="../templates")
 
 
 def json_serial(obj):
-    """JSON serializer for objects not serializable
+    """JSON serializer for date and datetime objects not serializable
     by default json code
+    :param obj: obj encountered when serializing json
+    :return: obj in isoformat
     """
     if isinstance(obj, (datetime, date)):
         return obj.isoformat()
@@ -19,8 +21,7 @@ def json_serial(obj):
 @app.route("/", methods=["GET", "POST"])
 def home():
     """Homepage that has an input form where you can enter data
-    and it returns the prediction of a listing. From this page you can
-    also go to check last 10 inferences
+    and it returns the prediction of a listing.
     :return: html template based on GET or POST request
     """
     if request.method == "POST":
@@ -40,7 +41,7 @@ def home():
 @app.route("/predict", methods=["POST"])
 def predict():
     """Predict url is for an API calls to predict the price of
-    a listing and returns json format prediction object
+    a listing and returns json format predictions list
     :return: json format price prediction
     """
     try:
@@ -59,8 +60,8 @@ def predict():
 @app.route("/inferences", methods=["GET"])
 def inferences():
     """Page selects from database and returns
-    the 10 most recent inferences in a html format table
-    :return: html template with table of recent inferences
+    the 10 most recent inferences in a json format
+    :return: json with recent inferences
     """
     try:
         infers = get_inferences()

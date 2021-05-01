@@ -7,6 +7,22 @@ import numpy as np
 class Processor:
     """Class to procces input from form and api call, and
     can give a model output.
+
+    Attributes
+        * __reg - Regression model
+        * __scaler - Numerical data scaler
+        * __encoder - Categorical data encoder
+        * __categorical_features - list of categorical features
+
+    Methods
+        * transform_data - transforms and prepares data for inferences,
+        serves as an intermediary method in processing chain
+        * process_input - processes json input from API call and returns
+        processed data in numpy array
+        * process_form - processes form input and returns
+        processed data in numpy array
+        * predict - takes numpy array of processed data and outputs
+        numpy array with price predictions
     """
 
     def __init__(self):
@@ -56,7 +72,7 @@ class Processor:
         for the modeling by returning json format input (needed for database insert)
         and processed data as numpy array
         :param form_data: input form dictionary
-        :return: tuple of processed data and json type input
+        :return: tuple of json type input and processed data
         """
         amenities = [
             "Kitchen",
@@ -95,10 +111,10 @@ class Processor:
 
         return json_input, processed_data
 
-    def predict(self, input_params):
+    def predict(self, input_params) -> np.array:
         """Load model and make a predictions and return
-        a list of them.
-        :return: predictions list
+        a numpy array of them.
+        :return: predictions numpy array
         """
         predictions = self.__reg.predict(input_params)
         predictions = np.maximum(5, predictions)
